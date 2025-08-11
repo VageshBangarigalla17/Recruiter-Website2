@@ -1,9 +1,9 @@
 // backend/routes/admin/dashboard.js
 const express = require('express');
 const router  = express.Router();
-const adminCtrl = require('../../controllers/adminDashboardController');
-const { ensureAuthenticated } = require('../../middlewares/authMiddleware');
-const { isAdmin }             = require('../../middlewares/adminMiddleware');
+const adminCtrl = require('../../controllers/adminDashboardController.js');
+const { ensureAuthenticated } = require('../../middlewares/authMiddleware.js');
+const { isAdmin }             = require('../../middlewares/adminMiddleware.js');
 
 // Main Admin Dashboard
 router.get(

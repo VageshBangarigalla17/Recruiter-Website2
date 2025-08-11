@@ -6,21 +6,21 @@ console.log('Cloudinary config OK?', cloudinary.config().cloud_name);
 
 const express        = require('express');
 const path           = require('path');
-const connectDB      = require('./config/db');
+const connectDB      = require('./config/db.js');
 const session        = require('express-session');
 const MongoStore     = require('connect-mongo');
 const passport       = require('passport');
 const methodOverride = require('method-override');
 const flash          = require('connect-flash');
-const User           = require('./models/User');
-const Candidate      = require('./models/candidate');
+const User           = require('./models/User.js');
+const Candidate      = require('./models/candidate.js');
 const fetch          = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 // ─── Connect to MongoDB ─────────────────────────────────────────────────────
 connectDB();
 
 // ─── Passport Strategies ────────────────────────────────────────────────────
-require('./config/passport')();
+require('./config/passport.js')();
 
 const app = express();
 
@@ -75,10 +75,10 @@ app.use(async (req, res, next) => {
   next();
 });
 
-const { ensureAuthenticated } = require('./middlewares/authMiddleware');
+const { ensureAuthenticated } = require('./middlewares/authMiddleware.js');
 
 // ─── Auth Routes ───────────────────────────────────────────────────────────
-app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/auth.js'));
 
 // ─── Landing Page ──────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
@@ -148,15 +148,15 @@ app.get('/api/dashboard-stats', ensureAuthenticated, async (req, res) => {
 });
 
 // ─── Admin Routes ──────────────────────────────────────────────────────────
-app.use('/admin/recruiters', require('./routes/admin/recruiters'));
-app.use('/admin/dashboard', require('./routes/admin/dashboard'));
+app.use('/admin/recruiters', require('./routes/admin/recruiters.js'));
+app.use('/admin/dashboard', require('./routes/admin/dashboard.js'));
 
 // ─── Candidates Routes ─────────────────────────────────────────────────────
-app.use('/candidates', ensureAuthenticated, require('./routes/candidates'));
-app.use('/profile', require('./routes/profile'));
+app.use('/candidates', ensureAuthenticated, require('./routes/candidates.js'));
+app.use('/profile', require('./routes/profile.js'));
 
 // ─── Recruiter Routes ──────────────────────────────────────────────────────
-app.use('/recruiter', require('./routes/recruiter/dashboard'));
+app.use('/recruiter', require('./routes/recruiter/dashboard.js'));
 
 // ─── 404 Handler ───────────────────────────────────────────────────────────
 app.use((req, res) => {
