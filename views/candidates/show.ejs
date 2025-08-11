@@ -1,0 +1,76 @@
+<%- include('../partials/header') %>
+
+<main class="flex-grow container mx-auto p-6">
+  <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Candidate Details</h2>
+
+    <div class="space-y-4 text-gray-700">
+      <p><span class="font-medium">Date of Call:</span> <%= candidate.dateOfCall ? candidate.dateOfCall.toISOString().slice(0,10) : '—' %></p>
+      <p><span class="font-medium">Interview Type:</span> <%= candidate.interviewType %></p>
+      <p><span class="font-medium">Client:</span> <%= candidate.client %></p>
+      <p><span class="font-medium">Source:</span> <%= candidate.sourceType %></p>
+      <p><span class="font-medium">Source Type:</span> <%= candidate.source %></p>
+      <p><span class="font-medium">Name:</span> <%= candidate.candidateName %></p>
+      <p><span class="font-medium">Mobile:</span> <%= candidate.mobile %></p>
+      <p><span class="font-medium">Email:</span> <%= candidate.email || '—' %></p>
+      <p><span class="font-medium">Gender:</span> <%= candidate.gender || '—' %></p>
+      <p><span class="font-medium">Age:</span> <%= candidate.age || '—' %></p>
+      <p><span class="font-medium">Location:</span> <%= candidate.location || '—' %></p>
+      <p><span class="font-medium">Qualification:</span> <%= candidate.qualification || '—' %></p>
+      <p><span class="font-medium">Experience:</span> <%= candidate.experience || '—' %></p>
+      <p><span class="font-medium">Company Name:</span> <%= candidate.companyname || '—' %></p>
+      <p><span class="font-medium">Position:</span> <%= candidate.position %></p>
+      <p><span class="font-medium">Department:</span> <%= candidate.department || '—' %></p>
+      <p><span class="font-medium">HR Comments:</span> <%= candidate.hrComments || '—' %></p>
+      <p><span class="font-medium">HR Status:</span>
+        <span class="px-2 py-1 rounded-full text-sm font-semibold
+          <%= candidate.hrStatus==='Reject' ? 'bg-red-100 text-red-800'
+            : candidate.hrStatus==='Hold' ? 'bg-yellow-100 text-yellow-800'
+            : candidate.hrStatus==='Backup' ? 'bg-blue-100 text-blue-800'
+            : 'bg-gray-100 text-gray-800' %>">
+          <%= candidate.hrStatus %>
+        </span>
+      </p>
+      <p><span class="font-medium">Client Interview Date:</span>
+        <%= candidate.clientInterviewDate ? candidate.clientInterviewDate.toISOString().slice(0,10) : '—' %>
+      </p>
+      <p><span class="font-medium">Interview Attended:</span> <%= candidate.interviewAttended || '—' %></p>
+      <p><span class="font-medium">Not Attended Comments:</span> <%= candidate.notAttendedComments || '—' %></p>
+      <p><span class="font-medium">Client Status:</span> <%= candidate.clientStatus || '—' %></p>
+      <p><span class="font-medium">Client Comments:</span> <%= candidate.clientComments || '—' %></p>
+      <p><span class="font-medium">Final Status:</span> <%= candidate.finalStatus || '—' %></p>
+      <p><span class="font-medium">Additional Comments:</span> <%= candidate.comments || '—' %></p>
+      <p><span class="font-medium">Created At:</span> <%= candidate.createdAt ? candidate.createdAt.toISOString().slice(0,10) : '—' %></p>
+      <p><span class="font-medium">Updated At:</span> <%= candidate.updatedAt ? candidate.updatedAt.toISOString().slice(0,10) : '—' %></p>
+
+      <% if (candidate.resumePath) { %>
+        <p>
+          📄 Resume:
+          <a href="<%= candidate.resumePath %>" target="_blank" class="text-blue-600 hover:underline">
+            Download / View
+          </a>
+        </p>
+      <% } else { %>
+        <p class="text-gray-500">No resume uploaded.</p>
+      <% } %>
+    </div>
+
+    <div class="mt-8 flex justify-between">
+      <a href="/candidates" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded-lg transition">
+        ← Back
+      </a>
+      <div class="space-x-3">
+        <a href="/candidates/<%= candidate._id %>/edit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition">
+          Edit
+        </a>
+        <form action="/candidates/<%= candidate._id %>/delete" method="POST" onsubmit="return confirm('Delete this candidate?');" class="inline">
+          <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg transition">
+            Delete
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

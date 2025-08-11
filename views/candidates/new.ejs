@@ -1,0 +1,262 @@
+<%- include('../partials/header') %>
+
+<main class="flex-grow container mx-auto p-6">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Add Candidate</h2>
+
+    <form action="/candidates" method="POST" enctype="multipart/form-data" class="space-y-6">
+      <!-- Row 1: Date of Call & Interview Type -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date of Call</label>
+          <input type="date" name="dateOfCall" required
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Interview Type</label>
+          <select name="interviewType" required
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled selected>Select Interview Type</option>
+            <option>Direct</option>
+            <option>Inbound</option>
+            <option>Outbound</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 2: Client -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Client</label>
+        <select name="client" required
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="" disabled selected>Select Client</option>
+          <option>Wonderla</option>
+          <option>Suzen</option>
+          <option>Digiphoto</option>
+          <option>Cospower</option>
+          <option>Pride</option>
+          <option>Chakde</option>
+          <option>Others</option>
+        </select>
+      </div>
+
+      <!-- Row 3: Source Type & Source -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Source</label>
+          <select name="sourceType" required
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled selected>Select Source</option>
+            <option>Walkin</option>
+            <option>Employee Referral</option>
+            <option>Job Portal</option>
+            <option>Social Media</option>
+            <option>Others</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Source Type</label>
+          <input type="text" name="source" required placeholder="e.g. LinkedIn, Indeed"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Row 4: Candidate Name (spans 2 cols) -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Candidate Name</label>
+        <input type="text" name="candidateName" required placeholder="Full Name"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Row 5: Mobile No & Email -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Mobile No</label>
+          <input type="text" name="mobile" required pattern="\d{10}" placeholder="10-digit mobile"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email ID</label>
+          <input type="email" name="email" placeholder="example@mail.com"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Row 6: Gender & Age -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+          <select name="gender" required
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled selected>Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+          <input type="number" name="age" min="15" placeholder="Age"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Row 7: Location & Qualification -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Candidate Location</label>
+          <input type="text" name="location" placeholder="City, State"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Qualification</label>
+          <input type="text" name="qualification" placeholder="e.g. B.Sc, MBA"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Row 8: Experience & Company Name -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Experience</label>
+          <input type="text" name="experience" placeholder="e.g. 2 years, Fresher"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
+          <input type="text" name="companyName" placeholder="Last or current"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Row 9: Position & Department -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Position Applied For</label>
+          <input type="text" name="position" required placeholder="Job Title"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+          <input type="text" name="department" placeholder="e.g. IT, HR"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Row 10: HR Comments (taller textarea) & HR Status -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">HR Comments</label>
+          <textarea name="hrComments" rows="2"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">HR Status</label>
+          <select name="hrStatus" required id="hrStatus"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled selected>Select HR Status</option>
+            <option value="Select">Select</option>
+            <option value="Reject">Reject</option>
+            <option value="Hold">Hold</option>
+            <option value="Backup">Backup</option>
+            <option value="Review">Review</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Conditional Fields: show only when HR Status = "Select" -->
+      <div id="conditionalFields" class="hidden border-t pt-6 mt-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Client Interview Date</label>
+            <input type="date" name="clientInterviewDate"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Interview Attended</label>
+            <input type="text" name="interviewAttended" placeholder="Yes/No"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Comments, if not Attended</label>
+            <input type="text" name="notAttendedComments"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Client Status</label>
+            <select name="clientStatus"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="" disabled selected>Select Client Status</option>
+              <option value="Select">Select</option>
+              <option value="Reject">Reject</option>
+              <option value="Hold">Hold</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Client Comments</label>
+            <input type="text" name="clientComments"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Final Status</label>
+            <select name="finalStatus"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="" disabled selected>Select final Status</option>
+              <option>Offer in Progress</option>
+              <option>Offered</option>
+              <option>Joined</option>
+              <option>Yet to Join</option>
+              <option>Shortlist Dropout</option>
+              <option>Offer Dropout</option>
+              <option>Joining Dropout</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Comments</label>
+          <textarea name="comments" rows="3"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+      </div>
+
+      <!-- Row 11: Upload Resume -->
+      <div class="flex justify-center pt-6">
+        <label
+          class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition">
+          Upload Resume
+          <input type="file" name="resume" accept=".pdf,.doc,.docx" class="hidden" />
+        </label>
+      </div>
+
+      <!-- Submit / Cancel -->
+      <div class="flex justify-end gap-4 pt-4">
+        <button type="submit"
+          class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition">Submit</button>
+        <a href="/dashboard"
+          class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition">Cancel</a>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+  const hrStatus = document.getElementById('hrStatus');
+  const conditionalFields = document.getElementById('conditionalFields');
+
+  function toggleFields() {
+    if (hrStatus.value === 'Select') {
+      conditionalFields.classList.remove('hidden');
+    } else {
+      conditionalFields.classList.add('hidden');
+    }
+  }
+
+  hrStatus.addEventListener('change', toggleFields);
+  window.addEventListener('DOMContentLoaded', toggleFields);
+</script>
+
+<%- include('../partials/footer') %>

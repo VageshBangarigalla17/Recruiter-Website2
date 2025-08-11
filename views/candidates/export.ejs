@@ -1,0 +1,158 @@
+<%- include('../partials/header') %>
+
+<main class="container mx-auto p-6 flex-grow">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Export Candidates</h2>
+
+  <!-- Filter bar -->
+  <form action="/candidates/export" method="GET" class="mb-6 space-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <input
+        type="text"
+        name="searchName"
+        value="<%= filters.searchName || '' %>"
+        placeholder="Search by name"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+      <input
+        type="text"
+        name="searchMobile"
+        value="<%= filters.searchMobile || '' %>"
+        placeholder="Search by mobile"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+      <input
+        type="text"
+        name="searchPosition"
+        value="<%= filters.searchPosition || '' %>"
+        placeholder="Search by position"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+      <input
+        type="text"
+        name="searchClient"
+        value="<%= filters.searchClient || '' %>"
+        placeholder="Search by client"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+    </div>
+    <div class="flex flex-wrap items-center space-x-2">
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition"
+      >
+        Search
+      </button>
+      <a
+        href="/candidates/export"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-6 py-2 rounded-lg transition"
+      >
+        Refresh
+      </a>
+    </div>
+
+        <div class="mb-4 text-right">
+            <a href="/candidates" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-6 py-2 rounded-lg transition">← Back to Candidates</a>
+        </div>
+  </form>
+
+  <% if (error_msg) { %>
+    <div class="bg-red-100 text-red-800 p-4 rounded-lg mb-4"><%= error_msg %></div>
+  <% } %>
+
+  <form action="/candidates/export/download" method="POST">
+    <!-- Bulk action bar -->
+    <div class="flex items-center mb-4 space-x-4">
+      <label class="inline-flex items-center cursor-pointer">
+        <input
+          id="selectAllTop"
+          type="checkbox"
+          class="form-checkbox h-5 w-5 text-blue-600"
+        />
+        <span class="ml-2 font-medium text-gray-700">Select All</span>
+      </label>
+      <button
+        type="submit"
+        class="ml-auto bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2 rounded-lg transition"
+      >
+        Download Selected
+      </button>
+    </div>
+
+    <div class="overflow-x-auto border rounded-lg shadow-sm">
+      <table class="min-w-full table-auto bg-white divide-y divide-gray-200">
+        <thead class="bg-gray-50 sticky top-0">
+          <tr>
+            <th class="p-3 text-center">
+              <input id="cb-all" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" />
+            </th>
+            <% /* Dynamically generate headers if you like, otherwise list them: */ %>
+            <% const cols = [
+                'Date of Call','Client','Source','Source Type','Name','Mobile','Email','Gender',
+                'Age','Location','Qualification','Position','Department','HR Status',
+                'Client Interview Date','Interview Attended','Not Attended Comments',
+                'Client Status','Client Comments','Final Status','Comments'
+              ];
+            %>
+            <% cols.forEach(col => { %>
+              <th class="p-3 text-left font-medium text-gray-600 whitespace-nowrap">
+                <%= col %>
+              </th>
+            <% }) %>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% candidates.forEach(c => { %>
+            <tr class="hover:bg-gray-50 odd:bg-gray-50 even:bg-white">
+              <td class="p-2 text-center">
+                <input
+                  type="checkbox"
+                  name="ids"
+                  value="<%= c._id %>"
+                  class="row-checkbox form-checkbox h-4 w-4 text-blue-600"
+                />
+              </td>
+              <td class="p-2 whitespace-nowrap"><%= c.dateOfCall.toISOString().slice(0,10) %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.client %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.sourceType %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.source %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.candidateName %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.mobile %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.email %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.gender %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.age %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.location %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.qualification %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.position %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.department %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.hrStatus %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.clientInterviewDate %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.interviewAttended %></td>
+              <td class="p-2"><%= c.notAttendedComments %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.clientStatus %></td>
+              <td class="p-2"><%= c.clientComments %></td>
+              <td class="p-2 whitespace-nowrap"><%= c.finalStatus %></td>
+              <td class="p-2"><%= c.comments %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script>
+  const toggleAll = checked => {
+    document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = checked);
+    document.getElementById('cb-all').checked = checked;
+    document.getElementById('selectAllTop').checked = checked;
+  };
+
+  document.getElementById('cb-all').addEventListener('change', function() {
+    toggleAll(this.checked);
+  });
+  document.getElementById('selectAllTop').addEventListener('change', function() {
+    toggleAll(this.checked);
+  });
+</script>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ADHYAHR RECRUITMENT</title>
+  <!-- Tailwind via CDN for simplicity; swap for your own build if needed -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body style="zoom:90%;" class="antialiased text-gray-800">
+
+  <!-- HEADER -->
+  <header class="w-full bg-white shadow-sm fixed top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="text-xl font-bold">ADYAHR RECRUITMENT</div>
+      <a href="/login"
+         class="bg-blue-900 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-800 transition">
+        Get Started
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="pt-24">
+    <div class="max-w-4xl mx-auto text-center px-6">
+      <h1 class="text-5xl font-extrabold mb-4">Professional Recruitment Platform</h1>
+      <p class="text-lg text-gray-600 mb-8">
+        Streamline your recruitment process with our comprehensive platform designed for efficient candidate management and team collaboration.
+      </p>
+      <div class="space-x-4">
+        <a href="/login"
+           class="bg-blue-900 text-white px-6 py-3 rounded-lg font-medium shadow hover:bg-blue-800 transition">
+          Start Recruiting
+        </a>
+        <a href="#features"
+           class="bg-white border border-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium shadow hover:bg-gray-50 transition">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-semibold text-center mb-12">Why Choose ADHYAHR RECRUITMENT?</h2>
+      <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Card 1 -->
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div class="mb-4">
+            <!-- Replace with your SVG or icon component -->
+            <svg class="w-10 h-10 mx-auto text-blue-900" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67
+                       0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2 text-center">Recruiter Management</h3>
+          <p class="text-gray-600 text-sm text-center">Manage your recruitment team with ease.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div class="mb-4">
+            <svg class="w-10 h-10 mx-auto text-blue-900" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0
+                       4h14v-2H7v2zm0-8h14V7H7v2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2 text-center">Application Tracking</h3>
+          <p class="text-gray-600 text-sm text-center">Track and manage candidate applications.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div class="mb-4">
+            <svg class="w-10 h-10 mx-auto text-blue-900" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4
+                       4h14v-2H7v2zm0 4h14v-2H7v2zm0-8h14V7H7v2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2 text-center">Analytics & Reports</h3>
+          <p class="text-gray-600 text-sm text-center">Get insights into your recruitment performance.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+          <div class="mb-4">
+            <svg class="w-10 h-10 mx-auto text-blue-900" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1C6.48 1 2 5.48 2
+                       11s4.48 10 10 10 10-4.48 10-10S17.52 1 12 1zM7
+                       11h2v2H7v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2 text-center">Secure Access</h3>
+          <p class="text-gray-600 text-sm text-center">Role-based access control for admins and recruiters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FOOTER -->
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-2xl font-semibold mb-4">Ready to Transform Your Recruitment?</h2>
+      <p class="text-gray-600 mb-8">
+        Join thousands of companies using ADHYAHR RECRUITMENT to find the best talent.
+      </p>
+      <a href="/login"
+         class="bg-blue-900 text-white px-8 py-3 rounded-lg font-medium shadow hover:bg-blue-800 transition">
+        Get Started Today
+      </a>
+    </div>
+  </section>
+
+  <!-- GLOBAL FOOTER -->
+  <footer class="py-6 text-center text-gray-500 text-sm bg-gray-50">
+    © <%= new Date().getFullYear() %> ADHYAHR RECRUITMENT. All rights reserved.
+  </footer>
+</body>
+</html>

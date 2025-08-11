@@ -1,0 +1,240 @@
+<%- include('../partials/header') %>
+
+<main class="flex-grow mx-auto p-4 sm:p-6 lg:p-8 max-w-full lg:max-w-screen-2xl">
+
+  <!-- Optional mobile scroll hint -->
+  <p class="text-gray-500 text-xs mb-2 sm:hidden">
+    Swipe left/right to see more columns →
+  </p>
+
+  <!-- Filters + Actions row -->
+  <div class="flex flex-wrap items-center justify-between mb-6 gap-4">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Candidates</h2>
+
+    <!-- Search filters -->
+    <form method="GET" action="/candidates"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:flex gap-2 flex-1 min-w-[280px]">
+      
+      <div class="relative flex-1">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+        </span>
+        <input
+          type="text"
+          name="serialRefNumber"
+          placeholder="Ref. No."
+          value="<%= filter.serialRefNumber || '' %>"
+          class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pl-8 w-full"
+        />
+      </div>
+      
+      <div class="relative flex-1">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+        </span>
+        <input
+          type="text"
+          name="searchName"
+          placeholder="Search by name"
+          value="<%= filter.searchName || '' %>"
+          class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pl-8 w-full"
+        />
+      </div>
+
+      <div class="relative flex-1">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+        </span>
+        <input
+          type="text"
+          name="searchMobile"
+          placeholder="Mobile"
+          value="<%= filter.searchMobile || '' %>"
+          class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pl-8 w-full"
+        />
+      </div>
+      
+      <div class="relative flex-1">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+        </span>
+        <input
+          type="text"
+          name="searchPosition"
+          placeholder="Position"
+          value="<%= filter.searchPosition || '' %>"
+          class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pl-8 w-full"
+        />
+      </div>
+<!-- 
+       <div class="relative flex-1">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+        </span>
+        <input
+          type="text"
+          name="searchDate"
+          placeholder="Date (YYYY-MM-DD)"
+          value="<%= filter.searchDate || '' %>"
+          class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pl-8 w-full"
+        />
+      </div> -->
+
+
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 text-sm rounded-lg transition">
+        Search
+      </button>
+
+      <a
+        href="/candidates"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1 text-sm rounded-lg transition"
+      >
+        Refresh
+      </a>
+    </form>
+
+    <!-- Action buttons -->
+    <div class="flex flex-col sm:flex-row gap-2">
+      <a
+        href="/candidates/new"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 text-sm rounded-lg transition"
+      ><i class="fa-solid fa-plus"></i> Add Candidate
+      </a>
+      <a
+        href="/candidates/export"
+        class="bg-blue-900 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg transition duration-200 shadow px-4 py-2 text-sm"
+      ><i class="fa-solid fa-file-excel"></i> Export to Excel
+      </a>
+    </div>
+  </div>
+
+  <!-- Candidates table -->
+  <div class="w-full overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="min-w-max sm:min-w-full text-left text-sm whitespace-nowrap">
+      <thead class="bg-gray-100 sticky top-0 z-10">
+        <tr>
+          <th class="px-3 py-1 font-medium text-gray-700">Ref. No.</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Recruiter</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Date</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Source</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Name</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Mobile</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Position</th>
+          <th class="px-3 py-1 font-medium text-gray-700">HR Status</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Client Status</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Final Status</th>
+          <th class="px-3 py-1 font-medium text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% if (!candidates.length) { %>
+          <tr>
+            <td colspan="11" class="px-3 py-4 text-center text-gray-500">
+              No candidates found.
+            </td>
+          </tr>
+        <% } else { %>
+          <% candidates.forEach(c => { %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-3 py-1 text-xs sm:text-sm truncate max-w-[140px]">
+                <%= c.serialRefNumber || '—' %>
+              </td>
+              <td class="px-3 py-1 text-xs sm:text-sm truncate max-w-[140px]">
+                <%= c.createdBy?.username || '—' %>
+              </td>
+              <td class="px-3 py-1 text-xs sm:text-sm">
+                <%= c.dateOfCall.toISOString().slice(0,10) %>
+              </td>
+              <td class="px-3 py-1 text-xs sm:text-sm truncate max-w-[100px]">
+                <%= c.source || '—' %>
+              </td>
+              <td class="px-3 py-1 text-xs sm:text-sm truncate max-w-[140px]">
+                <%= c.candidateName %>
+              </td>
+              <td class="px-3 py-1 text-xs sm:text-sm truncate max-w-[120px]">
+                <%= c.mobile %>
+              </td>
+              <td class="px-3 py-1 text-xs sm:text-sm truncate max-w-[120px]">
+                <%= c.position %>
+              </td>
+
+              <!-- HR Status -->
+              <td class="px-3 py-1 text-xs sm:text-sm">
+                <% if (c.hrStatus) { %>
+                  <span class="px-2 py-0.5 rounded-full text-xs font-semibold
+                    <%= c.hrStatus==='Reject' ? 'bg-red-100 text-red-800' :
+                       c.hrStatus==='Hold'   ? 'bg-yellow-100 text-yellow-800' :
+                       c.hrStatus==='Backup' ? 'bg-blue-100 text-blue-800' :
+                       'bg-gray-100 text-gray-800' %>">
+                    <%= c.hrStatus %>
+                  </span>
+                <% } else { %>—<% } %>
+              </td>
+
+              <!-- Client Status -->
+              <td class="px-3 py-1 text-xs sm:text-sm">
+                <% if (c.clientStatus) { %>
+                  <span class="px-2 py-0.5 rounded-full text-xs font-semibold
+                    <%= c.clientStatus==='Reject' ? 'bg-red-100 text-red-800' :
+                       c.clientStatus==='Hold'   ? 'bg-yellow-100 text-yellow-800' :
+                       'bg-gray-100 text-gray-800' %>">
+                    <%= c.clientStatus %>
+                  </span>
+                <% } else { %>—<% } %>
+              </td>
+
+              <!-- Final Status -->
+              <td class="px-3 py-1 text-xs sm:text-sm">
+                <% if (c.finalStatus) { %>
+                  <span class="px-2 py-0.5 rounded-full text-xs font-semibold
+                    <%= c.finalStatus==='Offered'           ? 'bg-green-100 text-green-800' :
+                       c.finalStatus==='Offer in Progress' ? 'bg-green-50 text-green-700' :
+                       c.finalStatus==='Yet to Join'       ? 'bg-yellow-50 text-yellow-700' :
+                       'bg-gray-100 text-gray-800' %>">
+                    <%= c.finalStatus %>
+                  </span>
+                <% } else { %>—<% } %>
+              </td>
+
+              <!-- Actions -->
+              <td class="px-3 py-1 flex gap-2">
+                <a href="/candidates/<%= c._id %>"
+                   class="text-blue-600 hover:underline text-xs sm:text-sm">
+                  View
+                </a>
+                <a href="/candidates/<%= c._id %>/edit"
+                   class="text-green-600 hover:underline text-xs sm:text-sm">
+                  Edit
+                </a>
+                <form method="POST" action="/candidates/<%= c._id %>/delete"
+                      onsubmit="return confirm('Delete this candidate?');">
+                  <button type="submit"
+                          class="text-red-600 hover:underline text-xs sm:text-sm">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <% if (pagination.totalPages > 1) { %>
+    <div class="flex flex-wrap justify-center mt-6 gap-2 text-xs sm:text-sm">
+      <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+        <a
+          href="?page=<%= i %>&searchName=<%= filter.searchName||'' %>&searchMobile=<%= filter.searchMobile||'' %>&searchPosition=<%= filter.searchPosition||'' %>&serialRefNumber=<%= filter.serialRefNumber||'' %>"
+          class="px-2 py-1 rounded-lg border
+                 <%= i===pagination.page ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'%>">
+          <%= i %>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+
+</main>
+
+<%- include('../partials/footer') %>

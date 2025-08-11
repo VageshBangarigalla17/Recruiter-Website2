@@ -1,0 +1,245 @@
+<%- include('../partials/header') %>
+
+<main class="max-w-screen-2xl mx-auto p-6 space-y-8">
+    <!-- Header -->
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-900">Recruiter Performance</h1>
+            <p class="text-lg text-gray-500">
+                Analytics for <span class="font-semibold text-blue-600"><%= recruiter.username %></span>
+            </p>
+        </div>
+        <a href="/admin/dashboard" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white shadow-md rounded-xl p-5 flex flex-wrap items-end gap-4 border border-gray-100">
+        <div>
+            <label class="text-sm font-medium text-gray-600">Start Date</label>
+            <input id="startDate" type="date" class="border border-gray-300 rounded-md px-3 py-2 w-full mt-1" value="<%= defaultStart %>">
+        </div>
+        <div>
+            <label class="text-sm font-medium text-gray-600">End Date</label>
+            <input id="endDate" type="date" class="border border-gray-300 rounded-md px-3 py-2 w-full mt-1" value="<%= defaultEnd %>">
+        </div>
+        <div>
+            <label class="text-sm font-medium text-gray-600">Client</label>
+            <select id="clientSelect" class="border border-gray-300 rounded-md px-3 py-2 w-full mt-1">
+                <option value="">All Clients</option>
+                <% allClients.forEach(c => { %>
+                    <option value="<%= c %>"><%= c %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="ml-auto flex gap-2 pt-6">
+            <button id="btnLoad" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-lg shadow-sm transition">Load Data</button>
+            <button id="btnToday" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg transition">Today</button>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+        <% const kpis = [
+            { id: 'totalCalls', label: 'Total Calls', color: 'text-blue-700', bg: 'bg-blue-50' },
+            { id: 'selectedCount', label: 'Selected', color: 'text-teal-600', bg: 'bg-teal-50' },
+            { id: 'offersMade', label: 'Offers Made', color: 'text-green-600', bg: 'bg-green-50' },
+            { id: 'dropouts', label: 'Dropouts', color: 'text-red-600', bg: 'bg-red-50' },
+            { id: 'conversionRate', label: 'Conversion %', color: 'text-indigo-600', bg: 'bg-indigo-50' }
+        ]; %>
+        <% kpis.forEach(kpi => { %>
+            <div class="rounded-xl shadow-sm p-4 text-center border border-gray-100 hover:shadow-lg transition <%= kpi.bg %>">
+                <p class="text-gray-500 text-sm"><%= kpi.label %></p>
+                <p id="<%= kpi.id %>" class="text-4xl font-bold <%= kpi.color %> mt-1">0</p>
+            </div>
+        <% }) %>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow border border-gray-100 lg:col-span-2">
+            <h3 class="text-lg font-semibold mb-4 text-gray-700">Daily Performance Trend</h3>
+            <div class="flex justify-center">
+                <canvas id="lineChart" width="600" height="180" class="!w-[350px] !h-[180px] md:!w-[600px]"></canvas>
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col items-center">
+            <h3 class="text-lg font-semibold mb-4 text-gray-700">Selection Breakdown</h3>
+            <canvas id="pieChart" width="180" height="180" class="!w-[180px] !h-[180px]"></canvas>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col items-center">
+        <h3 class="text-lg font-semibold mb-4 text-gray-700">Client-wise Calls</h3>
+        <canvas id="barChart" width="400" height="180" class="!w-[300px] !h-[180px] md:!w-[400px]"></canvas>
+    </div>
+
+    <!-- Daily Breakdown Table -->
+    <div class="bg-white p-6 rounded-xl shadow border border-gray-100">
+        <h3 class="text-lg font-semibold mb-4 text-gray-700">Daily Breakdown</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500 uppercase tracking-wider">
+                    <tr>
+                        <th class="py-3 px-4 text-left">Date</th>
+                        <th class="py-3 px-4 text-left">Total Calls</th>
+                        <th class="py-3 px-4 text-left">Total Selected</th>
+                        <th class="py-3 px-4 text-left">Client-wise Selected</th>
+                    </tr>
+                </thead>
+                <tbody id="byDayBody" class="text-gray-700 divide-y divide-gray-200">
+                    <tr><td colspan="4" class="text-center py-8 text-gray-400">Loading data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<script>
+(async function() {
+    const startDateEl = document.getElementById('startDate');
+    const endDateEl = document.getElementById('endDate');
+    const clientSelectEl = document.getElementById('clientSelect');
+    const btnLoad = document.getElementById('btnLoad');
+    const btnToday = document.getElementById('btnToday');
+
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+    let barChart = new Chart(barCtx, {
+        type: 'bar',
+        data: { labels: [], datasets: [{ label: 'Calls', data: [], backgroundColor: '#3b82f6', borderRadius: 6 }] },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { color: '#f3f4f6' }, title: { display: true, text: 'Client' } },
+                y: { beginAtZero: true, grid: { color: '#f3f4f6' }, title: { display: true, text: 'Calls' } }
+            }
+        }
+    });
+
+    let lineChart = new Chart(lineCtx, {
+        type: 'line',
+        data: { labels: [], datasets: [
+            { label: 'Calls', data: [], borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.1)', tension: 0.3, fill: true, pointRadius: 3 },
+            { label: 'Selected', data: [], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', tension: 0.3, fill: true, pointRadius: 3 }
+        ]},
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                x: { type: 'time', time: { unit: 'day' }, grid: { color: '#f3f4f6' } },
+                y: { beginAtZero: true, grid: { color: '#f3f4f6' } }
+            }
+        }
+    });
+
+    let pieChart = new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Selected', 'Offers Made', 'Dropouts'],
+            datasets: [{
+                data: [0, 0, 0],
+                backgroundColor: ['#10b981', '#3b82f6', '#ef4444'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    async function loadData() {
+        const recruiterId = '<%= recruiter._id %>';
+        const startDate = startDateEl.value;
+        const endDate = endDateEl.value;
+        const client = clientSelectEl.value;
+
+        const url = `/admin/dashboard/recruiter/${recruiterId}/data?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}${client ? '&client=' + encodeURIComponent(client) : ''}`;
+
+        try {
+            const res = await fetch(url);
+            const json = await res.json();
+            if (!json.ok) throw new Error(json.message || 'Error');
+            updateUI(json);
+        } catch (err) {
+            console.error(err);
+            alert('Error loading data.');
+        }
+    }
+
+    function updateUI(data) {
+        document.getElementById('totalCalls').textContent = data.totalCalls || 0;
+        document.getElementById('selectedCount').textContent = data.selectedCount || 0;
+        document.getElementById('offersMade').textContent = data.offersMade || 0;
+        document.getElementById('dropouts').textContent = data.dropouts || 0;
+        document.getElementById('conversionRate').textContent = (data.conversionRate || 0) + '%';
+
+        // Bar Chart (Client Calls)
+        barChart.data.labels = data.clientCalls.map(c => c._id || 'Unknown');
+        barChart.data.datasets[0].data = data.clientCalls.map(c => c.calls);
+        barChart.update();
+
+        // Line Chart (Daily Trend)
+        lineChart.data.labels = data.byDay.map(d => d._id);
+        lineChart.data.datasets[0].data = data.byDay.map(d => ({ x: d._id, y: d.calls }));
+        lineChart.data.datasets[1].data = data.byDay.map(d => ({ x: d._id, y: d.selected }));
+        lineChart.update();
+
+        // Pie Chart (Selection Breakdown)
+        pieChart.data.datasets[0].data = [
+            data.selectedCount || 0,
+            data.offersMade || 0,
+            data.dropouts || 0
+        ];
+        pieChart.update();
+
+        // Table (Daily Breakdown)
+        const tbody = document.getElementById('byDayBody');
+        tbody.innerHTML = '';
+        if (!data.byDay.length) {
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-gray-400">No data available</td></tr>';
+            return;
+        }
+        data.byDay.forEach(row => {
+            const clientList = Object.entries(row.clients || {})
+                .filter(([client, selected]) => selected > 0)
+                .map(([client, selected]) =>
+                    `<span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">${client || 'N/A'}: ${selected}</span>`
+                ).join(' ');
+
+            tbody.innerHTML += `
+                <tr class="hover:bg-gray-50">
+                    <td class="py-3 px-4">${new Date(row._id).toLocaleDateString('en-CA')}</td>
+                    <td class="py-3 px-4 font-medium">${row.calls}</td>
+                    <td class="py-3 px-4 font-medium text-green-600">${row.selected}</td>
+                    <td class="py-3 px-4">${clientList || '<span class="text-gray-400">None</span>'}</td>
+                </tr>
+            `;
+        });
+    }
+
+    btnLoad.addEventListener('click', loadData);
+    btnToday.addEventListener('click', () => {
+        const iso = new Date().toISOString().slice(0, 10);
+        startDateEl.value = iso;
+        endDateEl.value = iso;
+        clientSelectEl.value = '';
+        loadData();
+    });
+
+    await loadData();
+})();
+</script>

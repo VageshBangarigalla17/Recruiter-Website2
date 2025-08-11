@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<main style="zoom:70%" class="min-h-screen bg-gray-50 py-10 px-4 rounded-2xl">
+  <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden" -->
+    <!-- Header Section -->
+    <div class="bg-blue-900 text-white px-6 py-3 rounded-lg font-medium shadow hover:bg-blue-800 transition flex flex-col md:flex-row items-center md:items-start justify-between p-8 space-y-4 md:space-y-0 rounded-2xl-l">
+      <div class="flex items-center space-x-6">
+        <!-- <img
+          src="<%= user.avatar || 'https://res.cloudinary.com/dtpfscvr0/image/upload/v1690000000/avatars/default-user.png' %>"
+          alt="User Avatar"
+          class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-gray-700 shadow-lg object-cover"
+          onerror="this.src='https://res.cloudinary.com/dtpfscvr0/image/upload/v1690000000/avatars/default-user.png'"
+        /> -->
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold">Hello, <%= user.fullName || user.username %></h1>
+          <p class="mt-2 text-gray-300">Role: <span class="font-medium"><%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %></span></p>
+        </div>
+      </div>
+      <!-- <div class="flex space-x-4">
+        <a href="/profile" class="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.404 0 4.664.656 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span class="text-white font-medium">My Profile</span>
+        </a>
+        <a href="/logout" class="flex items-center space-x-2 bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m0-8V7a2 2 0 114 0v1"/>
+          </svg>
+          <span class="text-white font-medium">Logout</span>
+        </a>
+      </div> -->
+    </div>
+
+    <!-- Navigation Cards -->
+    <div class="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a href="/candidates" class="flex flex-col items-center bg-gray-100 hover:bg-gray-200 rounded-xl shadow-sm p-6 transition">
+        <span class="text-4xl mb-3"><i class="fa-solid fa-people-group"></i></span>
+        <span class="mt-2 text-lg font-medium text-gray-800">Candidates</span>
+      </a>
+      <!-- Add Candidate -->
+      <a href="/candidates/new" class="flex flex-col items-center bg-green-50 hover:bg-green-100 rounded-xl shadow-sm p-6 transition">
+        <span class="text-4xl mb-3"><i class="fa-solid fa-plus"></i></span>
+        <span class="mt-2 text-lg font-medium text-green-800">Add Candidate</span>
+      </a>
+      <% if (user.role !== 'recruiter') { %>
+        <!-- Recruiters (only for admin/hr) -->
+        <a href="/admin/recruiters" class="flex flex-col items-center bg-yellow-50 hover:bg-yellow-100 rounded-xl shadow-sm p-6 transition">
+          <span class="text-4xl mb-3"><i class="fa-solid fa-people-group"></i></span>
+          <span class="mt-2 text-lg font-medium text-yellow-800">Recruiters</span>
+        </a>
+        <!-- Add Recruiter (only for admin/hr) -->
+        <a href="/admin/recruiters/new" class="flex flex-col items-center bg-purple-50 hover:bg-purple-100 rounded-xl shadow-sm p-6 transition">
+          <span class="text-4xl mb-3"><i class="fa-solid fa-plus"></i></span>
+          <span class="mt-2 text-lg font-medium text-purple-800">Add Recruiter</span>
+        </a>
+
+        <!-- Admin Dashboard -->
+        <a href="/admin/dashboard" class="flex flex-col items-center bg-purple-50 hover:bg-purple-100 rounded-xl shadow-sm p-6 transition">
+          <span class="text-4xl mb-3"><i class="fa-solid fa-chart-line"></i></span>
+          <span class="mt-2 text-lg font-medium text-purple-800">Dashboard</span>
+        </a>
+
+      <% } else { %>
+        <!-- Recruiter Self Dashboard (only for recruiter) -->
+        <a href="/recruiter/dashboard" class="flex flex-col items-center bg-blue-50 hover:bg-blue-100 rounded-xl shadow-sm p-6 transition">
+          <span class="text-4xl mb-3"><i class="fa-solid fa-chart-line"></i></span>
+          <span class="mt-2 text-lg font-medium text-blue-800">Dashboard</span>
+        </a>
+      <% } %>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

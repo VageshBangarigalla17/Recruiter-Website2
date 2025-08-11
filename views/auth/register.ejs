@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRMS Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      
+      <!-- Logo -->
+      <div class="text-xl font-bold text-blue-700">
+        HRMS Admin
+      </div>
+    </div>
+  </nav>
+
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-green-300 py-12 px-4">
+  <div class="w-full max-w-md bg-white shadow-lg rounded-xl p-8 space-y-6">
+
+    <h2 class="text-3xl font-bold text-center text-green-600">Register</h2>
+
+    <% if (error) { %>
+      <p class="bg-red-100 text-red-700 text-sm px-4 py-2 rounded-md">
+        <%= error %>
+      </p>
+    <% } %>
+
+    <form action="/register" method="POST" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Enter your name"
+          required
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+      </div>
+
+      <div>
+        <label for="role" class="block text-sm font-medium text-gray-700">Select Role</label>
+        <select
+          name="role"
+          id="role"
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-400"
+        >
+          <option value="employee">Employee</option>
+          <option value="hr">HR</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+      >
+        Register
+      </button>
+    </form>
+
+    <p class="text-sm text-center text-gray-600">
+      Already have an account?
+      <a href="/login" class="text-green-600 hover:underline">Login</a>
+    </p>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
