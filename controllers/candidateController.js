@@ -1,5 +1,5 @@
 // backend/controllers/candidateController.js
-const Candidate = require('../models/Candidate');
+const Candidate = require('../models/candidate');
 const ExcelJS   = require('exceljs');
 const path      = require('path');
 

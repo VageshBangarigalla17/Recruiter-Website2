@@ -1,8 +1,8 @@
 // controllers/adminDashboardController.js
 'use strict';
 
-const Candidate = require('../models/candidate'); // controllers/ -> ../models/
-const User = require('../models/User');
+const Candidate = require('..candidate.js'); // controllers/ -> ../models/
+const User = require('..User.js');
 const mongoose = require('mongoose');
 
 /**
@@ -316,10 +316,3 @@ exports.getRecruiterPerformanceData = async (req, res, next) => {
     res.status(500).json({ ok: false, message: 'Server error' });
   }
 };
-
-console.log('DBG controller __dirname:', __dirname);
-console.log('DBG process.cwd():', process.cwd());
-try { console.log('DBG resolve ../models/candidate ->', require.resolve('../models/candidate')); }
-catch(e) { console.log('DBG resolve ../models/candidate failed:', e.message); }
-try { console.log('DBG resolve ../models/candidate ->', require.resolve('../models/candidate')); }
-catch(e) { console.log('DBG resolve ../models/candidate failed:', e.message); }

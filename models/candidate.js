@@ -1,4 +1,4 @@
-// backend/models/Candidate.js
+// backend/models/candidate.js
 
 const mongoose = require('mongoose');
 

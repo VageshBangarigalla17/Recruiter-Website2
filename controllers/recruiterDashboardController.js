@@ -1,4 +1,4 @@
-const Candidate = require('../models/Candidate');
+const Candidate = require('../models/candidate');
 const mongoose = require('mongoose');
 
 exports.renderSelfDashboard = async (req, res, next) => {
