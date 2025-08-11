@@ -1,8 +1,8 @@
 // controllers/adminDashboardController.js
 'use strict';
 
-const Candidate = require('../models/candidate'); // controllers/ -> ../models/
-const User = require('../models/User');
+const Candidate = require('..candidate.js'); // controllers/ -> ../models/
+const User = require('..User.js');
 const mongoose = require('mongoose');
 
 /**
