@@ -1,5 +1,7 @@
-// backend/controllers/adminDashboardController.js
-const Candidate = require('../models/Candidate');
+// controllers/adminDashboardController.js
+'use strict';
+
+const Candidate = require('../models/candidate'); // controllers/ -> ../models/
 const User = require('../models/User');
 const mongoose = require('mongoose');
 
@@ -91,8 +93,14 @@ exports.getAdminData = async (req, res, next) => {
     let match = { createdAt: { $gte: start, $lte: end } };
 
     if (recruiterId && recruiterId !== 'admin') {
-      match.createdBy = new mongoose.Types.ObjectId(recruiterId);
+      // only set createdBy if recruiterId is a valid ObjectId
+      if (mongoose.Types.ObjectId.isValid(recruiterId)) {
+        match.createdBy = new mongoose.Types.ObjectId(recruiterId);
+      } else {
+        return res.status(400).json({ ok: false, message: 'Invalid recruiterId' });
+      }
     } else if (recruiterId === 'admin') {
+      // preserve existing behaviour (hard-coded admin id)
       match.createdBy = new mongoose.Types.ObjectId('688c83f1cb40ca2c42512b80');
     }
 
@@ -191,6 +199,10 @@ exports.getAdminData = async (req, res, next) => {
  */
 exports.renderRecruiterPerformance = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send('Invalid recruiter id');
+    }
+
     const recruiter = await User.findById(req.params.id).select('username').lean();
     if (!recruiter) return res.status(404).send('Recruiter not found');
 
@@ -220,6 +232,10 @@ exports.getRecruiterPerformanceData = async (req, res, next) => {
   try {
     const { startDate, endDate, client } = req.query;
     const { start, end } = parseDateRange(startDate, endDate);
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ ok: false, message: 'Invalid recruiter id' });
+    }
 
     const filter = {
       createdBy: new mongoose.Types.ObjectId(req.params.id),
