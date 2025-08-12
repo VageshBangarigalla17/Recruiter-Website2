@@ -173,8 +173,23 @@ exports.exportSelected = async (req, res) => {
       { header: 'Interview Type', key: 'interviewType',    width: 15 },
       { header: 'Created By',     key: 'createdByName',    width: 20 },
       { header: 'Created At',     key: 'createdAt',        width: 20 },
-      { header: 'Updated By',     key: 'updatedByName',    width: 20 },
-      { header: 'Updated At',     key: 'updatedAt',        width: 20 }
+      // { header: 'Updated By',     key: 'updatedByName',    width: 20 },
+      { header: 'Updated At',     key: 'updatedAt',        width: 20 },
+      { header:  'client',        key: 'client',          width: 20 },
+      { header: 'clientStatus',   key: 'clientStatus',    width: 20 },
+      { header: 'finalStatus',    key: 'finalStatus',     width: 20 },
+      { header: 'source',         key: 'source',          width: 20 },
+      { header: 'source type',    key: 'sourcetype',     width: 20 },
+      { header: 'gender',         key: 'gender',         width: 20 },
+      { header: 'age',         key: 'age',         width: 20 },
+      { header: 'location',         key: 'location',         width: 20 },
+      { header: 'qualification',         key: 'qualification',         width: 20 },
+      { header: 'gender',         key: 'gender',         width: 20 },
+      { header: 'department',         key: 'department',         width: 20 },
+      { header: 'client interview date',         key: 'clientInterviewDate',         width: 20 },
+      { header: 'gender',         key: 'gender',         width: 20 },
+      { header: 'final Status',         key: 'finalStatus',         width: 20 },
+
     ];
 
     cands.forEach(c => {
