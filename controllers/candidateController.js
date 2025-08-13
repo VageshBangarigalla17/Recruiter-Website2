@@ -203,7 +203,19 @@ exports.exportSelected = async (req, res) => {
         createdByName:  c.createdBy?.username || '—',
         createdAt:      c.createdAt?.toLocaleString() || '',
         updatedByName:  c.updatedBy?.username || '',
-        updatedAt:      c.updatedAt?.toLocaleString() || ''
+        updatedAt:      c.updatedAt?.toLocaleString() || '',
+        client:        c.client || '',
+        clientStatus:  c.clientStatus || '',
+        finalStatus:   c.finalStatus || '',
+        source:       c.source || '',
+        sourcetype:   c.sourcetype || '',
+        gender:      c.gender || '',
+        age:        c.age || '',
+        location:   c.location || '',
+        qualification: c.qualification || '',
+        department: c.department || '',
+        clientInterviewDate: c.clientInterviewDate || '',
+        
       });
     });
 
