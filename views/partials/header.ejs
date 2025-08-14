@@ -4,26 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <% 
+    // Safe defaults to avoid ReferenceError when pageTitle/pageDescription are not passed
+    const __pageTitle = (typeof pageTitle !== 'undefined' && pageTitle) 
+      ? pageTitle 
+      : "AdyaHR Recruitment – HRMS Dashboard";
+
+    const __pageDescription = (typeof pageDescription !== 'undefined' && pageDescription) 
+      ? pageDescription 
+      : 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.';
+
+    // Safe user reference
+    const u = (typeof user !== 'undefined' && user) ? user : null;
+  %>
+
   <!-- Dynamic SEO Title -->
-  <title><%= pageTitle || "AdyaHR Recruitment – HRMS Dashboard" %></title>
+  <title><%= __pageTitle %></title>
 
   <!-- Meta Description for SEO -->
-  <meta name="description" content="<%= pageDescription || 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.' %>">
+  <meta name="description" content="<%= __pageDescription %>">
 
   <!-- Keywords -->
   <meta name="keywords" content="AdyaHR, HRMS, recruitment, jobs, hiring, HR dashboard, candidates, recruiters, India">
 
   <!-- Open Graph for social sharing -->
-  <meta property="og:title" content="<%= pageTitle || 'AdyaHR Recruitment – HRMS Dashboard' %>">
-  <meta property="og:description" content="<%= pageDescription || 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.' %>">
+  <meta property="og:title" content="<%= __pageTitle %>">
+  <meta property="og:description" content="<%= __pageDescription %>">
   <meta property="og:image" content="https://adyahr.in/images/og-image.jpg">
   <meta property="og:url" content="https://adyahr.in">
   <meta property="og:type" content="website">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<%= pageTitle || 'AdyaHR Recruitment – HRMS Dashboard' %>">
-  <meta name="twitter:description" content="<%= pageDescription || 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.' %>">
+  <meta name="twitter:title" content="<%= __pageTitle %>">
+  <meta name="twitter:description" content="<%= __pageDescription %>">
   <meta name="twitter:image" content="https://adyahr.in/images/og-image.jpg">
 
   <!-- Favicon -->
@@ -81,7 +95,7 @@
         <!-- Logo -->
         <a href="/" class="flex items-center transform transition">
           <img src="/assets/logo.png" alt="AdyaHR Logo" class="h-10 w-auto object-contain" />
-          <img src="/assets/logo2.png" alt="AdyaHR Logo" class="h-10 w-auto object-contain" />
+          <img src="/assets/logo2.png" alt="AdyaHR Logo" class="h-10 w-auto object-contain ml-2" />
         </a>
       </div>
 
@@ -99,7 +113,7 @@
           <i class="fas fa-user-plus w-5"></i><span class="ml-2">Add Candidate</span>
         </a>
 
-        <% if (user && user.role === 'admin') { %>
+        <% if (u && u.role === 'admin') { %>
           <a href="/admin/recruiters" class="flex items-center px-3 py-2 rounded transition transform hover:scale-105 hover:bg-gray-200 dark:hover:bg-gray-700">
             <i class="fas fa-users w-5"></i><span class="ml-2">Recruiters</span>
           </a>
@@ -114,8 +128,8 @@
             @click="open = !open"
             class="flex items-center focus:outline-none space-x-2 transform transition hover:scale-105"
           >
-            <% if (user && user.avatar) { %>
-              <img src="<%= user.avatar %>" alt="Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
+            <% if (u && u.avatar) { %>
+              <img src="<%= u.avatar %>" alt="Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
             <% } else { %>
               <img src="/assets/default-avatar.png" alt="Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
             <% } %>
