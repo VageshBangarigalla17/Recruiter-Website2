@@ -174,7 +174,7 @@ const io = new Server(server, {
 
 app.set('io', io);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 io.on('connection', (socket) => {
   console.log('Socket connected:', socket.id);
