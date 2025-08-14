@@ -3,7 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HRMS Dashboard</title>
+
+  <!-- Dynamic SEO Title -->
+  <title><%= pageTitle || "AdyaHR Recruitment – HRMS Dashboard" %></title>
+
+  <!-- Meta Description for SEO -->
+  <meta name="description" content="<%= pageDescription || 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.' %>">
+
+  <!-- Keywords -->
+  <meta name="keywords" content="AdyaHR, HRMS, recruitment, jobs, hiring, HR dashboard, candidates, recruiters, India">
+
+  <!-- Open Graph for social sharing -->
+  <meta property="og:title" content="<%= pageTitle || 'AdyaHR Recruitment – HRMS Dashboard' %>">
+  <meta property="og:description" content="<%= pageDescription || 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.' %>">
+  <meta property="og:image" content="https://adyahr.in/images/og-image.jpg">
+  <meta property="og:url" content="https://adyahr.in">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= pageTitle || 'AdyaHR Recruitment – HRMS Dashboard' %>">
+  <meta name="twitter:description" content="<%= pageDescription || 'AdyaHR Recruitment provides the best HR and recruitment solutions in India. Manage candidates, recruiters, and streamline your hiring process with our HRMS dashboard.' %>">
+  <meta name="twitter:image" content="https://adyahr.in/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/logo.png">
 
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -40,8 +64,6 @@
 
     <!-- HEADER -->
     <header class="flex items-center justify-between bg-white dark:bg-gray-800 shadow px-4 sm:px-6 lg:px-8 py-3 motion-safe:animate-fade-in-down">
-       <!-- style="height: 68px;" -->
-      
       <!-- Left: Mobile menu + brand -->
       <div class="flex items-center space-x-2">
         <!-- Mobile menu button -->
@@ -57,18 +79,13 @@
 
         <!-- Logo -->
         <a href="/" class="flex items-center transform transition">
-  <img src="/assets/logo.png" 
-       alt="adyaHR Logo" 
-       class="h-10 w-auto object-contain" />
-       <img src="/assets/logo2.png" alt="adyaHR Logo" class="h-10 w-auto object-contain" />
-</a>
-
+          <img src="/assets/logo.png" alt="AdyaHR Logo" class="h-10 w-auto object-contain" />
+          <img src="/assets/logo2.png" alt="AdyaHR Logo" class="h-10 w-auto object-contain" />
+        </a>
       </div>
 
       <!-- Right: Navigation links & user menu -->
       <div class="flex items-center space-x-4">
-        
-        <!-- Navigation Links -->
         <a href="/" class="flex items-center px-3 py-2 rounded transition transform hover:scale-105 hover:bg-gray-100 dark:hover:bg-gray-600">
           <i class="fa-solid fa-house"></i><span class="ml-2">Home</span>
         </a>
@@ -97,11 +114,9 @@
             class="flex items-center focus:outline-none space-x-2 transform transition hover:scale-105"
           >
             <% if (user && user.avatar) { %>
-              <img src="<%= user.avatar %>" alt="Avatar"
-                   class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
+              <img src="<%= user.avatar %>" alt="Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
             <% } else { %>
-              <img src="/assets/default-avatar.png" alt="Avatar"
-                   class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
+              <img src="/assets/default-avatar.png" alt="Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-300">
             <% } %>
             <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor"
                  viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -127,8 +142,7 @@
               <i class="fa-solid fa-gear"></i><span class="ml-2">Settings</span>
             </a>
             <form action="/logout" method="POST">
-              <button type="submit"
-                      class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900">
+              <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900">
                 🚪 Logout
               </button>
             </form>
