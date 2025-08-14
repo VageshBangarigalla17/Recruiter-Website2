@@ -34,14 +34,17 @@
     const baseCards = [
       { id: 'candidates', title: 'Candidates', href: '/candidates', icon: 'fa-solid fa-people-group', accent: 'text-gray-800 dark:text-gray-100' },
       { id: 'addCandidate', title: 'Add Candidate', href: '/candidates/new', icon: 'fa-solid fa-user-plus', accent: 'text-green-800 dark:text-green-200' },
-      { id: 'reports', title: 'Reports', href: '/admin/dashboard', icon: 'fa-solid fa-chart-line', accent: 'text-indigo-800 dark:text-indigo-200' },
       { id: 'profile', title: 'Profile', href: '/profile', icon: 'fa-solid fa-user', accent: 'text-yellow-800 dark:text-yellow-200' },
     ];
 
-    if (user && user.role && user.role !== 'recruiter') {
+    // ✅ Show "Reports" and recruiter management options only for admin
+    if (user && user.role === 'admin') {
+      baseCards.push({ id: 'reports', title: 'Dashboard', href: '/admin/dashboard', icon: 'fa-solid fa-chart-line', accent: 'text-indigo-800 dark:text-indigo-200' });
       baseCards.push({ id: 'recruiters', title: 'Recruiters', href: '/admin/recruiters', icon: 'fa-solid fa-users', accent: 'text-purple-800 dark:text-purple-200' });
       baseCards.push({ id: 'addRecruiter', title: 'Add Recruiter', href: '/admin/recruiters/new', icon: 'fa-solid fa-user-plus', accent: 'text-pink-800 dark:text-pink-200' });
-    } else if (user && user.role === 'recruiter') {
+    } 
+    // ✅ Recruiter-only card
+    else if (user && user.role === 'recruiter') {
       baseCards.push({ id: 'myStats', title: 'My Stats', href: '/recruiter/dashboard', icon: 'fa-solid fa-chart-simple', accent: 'text-blue-800 dark:text-blue-200' });
     }
 
@@ -132,5 +135,3 @@
 </main>
 
 <%- include('partials/footer') %>
-
-
